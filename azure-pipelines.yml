@@ -13,6 +13,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
+  Major: '0'
+  Minor: '1'
+  Patch: '1'
   buildConfiguration: 'Release'
   isReleaseBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
 
@@ -29,28 +32,20 @@ steps:
     command: 'test'
 
 - task: DotNetCoreCLI@2
-  displayName: "dotnet pack"
+  displayName: 'dotnet pack $(buildConfiguration)'
   inputs:
-    command: 'pack'
-    arguments: '--configuration $(buildConfiguration) -o ./dist'
-    projects: 'Chakra/Chakra.csproj'
-    nobuild: true
-    versioningScheme: 'off'
+    command: pack
+    versioningScheme: byPrereleaseNumber
+    majorVersion: '$(Major)'
+    minorVersion: '$(Minor)'
+    patchVersion: '$(Patch)'
 
-- task: Bash@3
-  displayName: Test pack output
-  inputs:
-    targetType: 'inline'
-    script: ls ./dist
+- task: NuGetAuthenticate@0
+  displayName: 'NuGet Authenticate'
 
 - task: NuGetCommand@2
-  displayName: 'nuget push'
+  displayName: 'NuGet push'
   inputs:
-    command: 'push'
-    feedsToUse: 'select'
-    packagesToPush: './*.nupkg'
-    nuGetFeedType: 'internal'
+    command: push
     publishVstsFeed: 'Chakra.NET'
-    versioningScheme: 'off'
     allowPackageConflicts: true
-  condition: and(succeeded(), eq(variables.isReleaseBranch, true))
