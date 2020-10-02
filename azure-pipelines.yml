@@ -34,3 +34,4 @@ steps:
 
 - bash: dotnet nuget push $(Build.ArtifactStagingDirectory)/dist/*.nupkg --api-key $(NUGETAPIKEY) --source https://api.nuget.org/v3/index.json
   displayName: dotnet nuget push
+  startsWith(variables['Build.SourceBranch'], 'refs/heads/release')
