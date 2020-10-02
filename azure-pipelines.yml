@@ -31,23 +31,8 @@ steps:
   inputs:
     command: 'test'
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet pack $(buildConfiguration)'
-  inputs:
-    command: pack
-    versioningScheme: byPrereleaseNumber
-    majorVersion: '$(Major)'
-    minorVersion: '$(Minor)'
-    patchVersion: '$(Patch)'
+- bash: dotnet pack -o ./dist
+  displayName: dotnet pack
 
-- task: NuGetAuthenticate@0
-  displayName: 'NuGet Authenticate using service connection'
-  inputs:
-    nuGetServiceConnections: 'NuGetOrgConnection'
-
-- task: NuGetCommand@2
-  inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-    nuGetFeedType: 'external'
-    publishFeedCredentials: 'NuGetOrgConnection'
+- bash: dotnet nuget push ./dist/Chakra.NET.0.1.1.nupkg --api-key oy2phiwctgsbq5bq67tqzbgf3pampz6elpks42xrf3b5fm --source https://api.nuget.org/v3/index.json
+  displayName: dotnet nuget push
