@@ -3,3 +3,4 @@
 *.DotSettings.user
 coverage-report/
 geektrust
+dist

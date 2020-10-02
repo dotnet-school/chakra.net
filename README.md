@@ -42,6 +42,10 @@ Creating a Nuget Package
 
   ```bash
   dotnet pack -o ./dist
+  
+dotnet nuget push ./dist/Chakra.NET.0.1.0.nupkg --api-key oy2phiwctgsbq5bq67tqzbgf3pampz6elpks42xrf3b5fm --source https://api.nuget.org/v3/index.json
+  
+  
   ```
-
+  
   
