@@ -44,7 +44,10 @@ steps:
   displayName: 'NuGet Authenticate using service connection'
   inputs:
     nuGetServiceConnections: 'NuGetOrgConnection'
+
 - task: NuGetCommand@2
   inputs:
-    command: push
-    nuGetFeedType: external
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'NuGetOrgConnection'
