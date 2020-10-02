@@ -31,8 +31,8 @@ steps:
   inputs:
     command: 'test'
 
-- bash: dotnet pack -o ./dist
+- bash: dotnet pack -o $(Build.ArtifactStagingDirectory)/dist
   displayName: dotnet pack
 
-- bash: dotnet nuget push ./dist/Chakra.NET.0.1.1.nupkg --api-key oy2phiwctgsbq5bq67tqzbgf3pampz6elpks42xrf3b5fm --source https://api.nuget.org/v3/index.json
+- bash: dotnet nuget push $(Build.ArtifactStagingDirectory)/dist/Chakra.NET.0.1.1.nupkg --api-key oy2phiwctgsbq5bq67tqzbgf3pampz6elpks42xrf3b5fm --source https://api.nuget.org/v3/index.json
   displayName: dotnet nuget push
