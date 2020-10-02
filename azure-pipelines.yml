@@ -32,5 +32,5 @@ steps:
 - bash: dotnet pack -o $(Build.ArtifactStagingDirectory)/dist
   displayName: dotnet pack
 
-- bash: dotnet nuget push $(Build.ArtifactStagingDirectory)/dist/*.nupkg --api-key oy2phiwctgsbq5bq67tqzbgf3pampz6elpks42xrf3b5fm --source https://api.nuget.org/v3/index.json
+- bash: dotnet nuget push $(Build.ArtifactStagingDirectory)/dist/*.nupkg --api-key $NUGETAPIKEY --source https://api.nuget.org/v3/index.json
   displayName: dotnet nuget push
