@@ -33,7 +33,7 @@ steps:
   inputs:
     command: 'pack'
     arguments: '--configuration $(buildConfiguration) -o ./dist'
-    packagesToPack: 'CommonLib/CommonLib.csproj'
+    projects: 'Chakra/Chakra.csproj'
     nobuild: true
     versioningScheme: 'off'
 
