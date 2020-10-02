@@ -32,19 +32,25 @@ steps:
   displayName: "dotnet pack"
   inputs:
     command: 'pack'
-    arguments: '--configuration $(buildConfiguration)'
+    arguments: '--configuration $(buildConfiguration) -o ./dist'
     packagesToPack: 'CommonLib/CommonLib.csproj'
     nobuild: true
     versioningScheme: 'off'
+
+- task: Bash@3
+  displayName: Test pack output
+  inputs:
+    targetType: 'inline'
+    script: ls ./dist
 
 - task: NuGetCommand@2
   displayName: 'nuget push'
   inputs:
     command: 'push'
     feedsToUse: 'select'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    packagesToPush: './*.nupkg'
     nuGetFeedType: 'internal'
-    publishVstsFeed: 'TestFeed'
+    publishVstsFeed: 'Chakra.NET'
     versioningScheme: 'off'
     allowPackageConflicts: true
   condition: and(succeeded(), eq(variables.isReleaseBranch, true))
