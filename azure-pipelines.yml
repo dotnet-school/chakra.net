@@ -43,9 +43,10 @@ steps:
 - task: NuGetAuthenticate@0
   displayName: 'NuGet Authenticate'
 
+- task: NuGetAuthenticate@0
+  inputs:
+    nuGetServiceConnections: 'NuGetOrgConnection'
 - task: NuGetCommand@2
-  displayName: 'NuGet push'
   inputs:
     command: push
-    publishVstsFeed: 'Chakra.NET'
-    allowPackageConflicts: true
+    nuGetFeedType: external
