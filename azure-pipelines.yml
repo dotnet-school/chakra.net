@@ -1,0 +1,37 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pr:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  Version: "0.1.1"
+  buildConfiguration: 'Release'
+  isReleaseBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
+  inputs:
+    command: 'build'
+    arguments: '--configuration $(buildConfiguration)'
+    projects: 'Chakra/Chakra.csproj'
+- task: DotNetCoreCLI@2
+  displayName: "dotnet test"
+  inputs:
+    command: 'test'
+
+- bash: dotnet pack -o $(Build.ArtifactStagingDirectory)/dist
+  displayName: dotnet pack
+
+- bash: dotnet nuget push $(Build.ArtifactStagingDirectory)/dist/*.nupkg --api-key $(NUGETAPIKEY) --source https://api.nuget.org/v3/index.json
+  displayName: dotnet nuget push
+  condition: startsWith(variables['Build.SourceBranch'], 'refs/heads/release')
