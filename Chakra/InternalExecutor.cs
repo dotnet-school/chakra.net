@@ -2,7 +2,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace DynamicRun.Builder
+namespace Chakra
 {
   public class InternalExecuter
   {

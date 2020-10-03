@@ -10,7 +10,6 @@ namespace Chakra
       using System.Collections;
       using System.Collections.Generic;
       using System.Threading.Tasks;
-      using DynamicRun;
       using SystemConsole = System.Console; // To capture console
 
       namespace Chakra
