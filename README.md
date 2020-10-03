@@ -26,7 +26,9 @@ Compile and run .NET snippets dynamically
 
 - [x] ~~line numbers in runtime errors~~ (not feasible)
 
-- [ ] compile errors and line numbers
+- [x] compile errors and line numbers
+
+- [ ] extract assemblies to API
 
 - [ ] creating classes
 
