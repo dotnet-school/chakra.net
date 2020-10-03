@@ -26,8 +26,6 @@ namespace Chakra
                         errorMessage.Append($"Line:{diagnostic.Location.GetLineSpan().Span.Start.Line}-");
                         errorMessage.Append($"{diagnostic.Id}, {diagnostic.GetMessage()}");
                     }
-                    Console.WriteLine(errorMessage.ToString());
-
                     throw new DynamicCompilationException( errorMessage.ToString(), lineNumber);
                 }
                 

@@ -56,7 +56,7 @@ namespace Chakra
       receiveDone.WaitOne();
 
       // Write the response to the console.  
-      Console.WriteLine("Request acknowledged by server");
+      // Console.WriteLine("Request acknowledged by server");
     }
 
     public void Close()
@@ -164,7 +164,7 @@ namespace Chakra
 
         // Complete sending the data to the remote device.  
         int bytesSent = client.EndSend(ar);
-        Console.WriteLine("Sent {0} bytes to server.", bytesSent);
+        // Console.WriteLine("Sent {0} bytes to server.", bytesSent);
 
         // Signal that all bytes have been sent.  
         sendDone.Set();

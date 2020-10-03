@@ -30,7 +30,7 @@ namespace Chakra
         public static void CaptureConsole()
         {
             _stdOut = new VirtualStdOut();
-            System.Console.SetOut(_stdOut);
+            Console.SetOut(_stdOut);
         }
         
         public static void SendConsoleOutput(string [] args)

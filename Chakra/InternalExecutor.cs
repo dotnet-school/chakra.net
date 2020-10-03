@@ -11,7 +11,6 @@ namespace Chakra
       IPAddress ipAddress = SocketConfig.GetServer();
       Random random = new Random();
       int port = random.Next(50000, 65000);
-      Console.WriteLine($"using port {port}");
 
       SocketServer server = Listen(ipAddress, port);
 
