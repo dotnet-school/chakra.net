@@ -17,10 +17,10 @@ namespace Chakra
     public byte[] buffer = new byte[BufferSize];
 
     // Received data string.
-    public StringBuilder sb = new StringBuilder();
+    public readonly StringBuilder sb = new StringBuilder();
 
     // Client socket.
-    public Socket workSocket = null;
+    public Socket? WorkSocket = null;
   }
 
   public class SocketServer
@@ -83,12 +83,17 @@ namespace Chakra
       allDone.Set();
 
       // Get the socket that handles the client request.  
-      Socket listener = (Socket) ar.AsyncState;
+      Socket? listener =  ar.AsyncState as Socket;
+      if (listener == null)
+      {
+        throw new Exception("Invalid socket state at SocketServer.AcceptCallback()");
+      }
+
       Socket handler = listener.EndAccept(ar);
 
       // Create the state object.  
       StateObject state = new StateObject();
-      state.workSocket = handler;
+      state.WorkSocket = handler;
       handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
               new AsyncCallback(ReadCallback), state);
     }
@@ -98,7 +103,7 @@ namespace Chakra
       // Retrieve the state object and the handler socket  
       // from the asynchronous state object.  
       StateObject state = (StateObject) ar.AsyncState;
-      Socket handler = state.workSocket;
+      Socket handler = state.WorkSocket;
 
       // Read data from the client socket.
       int bytesRead = handler.EndReceive(ar);

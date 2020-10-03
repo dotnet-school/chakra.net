@@ -8,7 +8,7 @@ namespace Chakra
 {
   public class SocketClient
   {
-    private Socket client;
+    private Socket _client;
 
     // ManualResetEvent instances signal completion.  
     private ManualResetEvent connectDone =
@@ -31,12 +31,12 @@ namespace Chakra
         IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
 
         // Create a TCP/IP socket.  
-        client = new Socket(ipAddress.AddressFamily,
+        _client = new Socket(ipAddress.AddressFamily,
                 SocketType.Stream, ProtocolType.Tcp);
 
         // Connect to the remote endpoint.  
-        client.BeginConnect(remoteEP,
-                new AsyncCallback(ConnectCallback), client);
+        _client.BeginConnect(remoteEP,
+                new AsyncCallback(ConnectCallback), _client);
         connectDone.WaitOne();
       }
       catch (Exception e)
@@ -48,11 +48,11 @@ namespace Chakra
     public void SendData(string message)
     {
       // Send test data to the remote device.  
-      Send(client, $"{message}{SocketConfig.EndOfMessage}");
+      Send(_client, $"{message}{SocketConfig.EndOfMessage}");
       sendDone.WaitOne();
 
       // Receive the response from the remote device.  
-      Receive(client);
+      Receive(_client);
       receiveDone.WaitOne();
 
       // Write the response to the console.  
@@ -62,8 +62,8 @@ namespace Chakra
     public void Close()
     {
       // Release the socket.  
-      client.Shutdown(SocketShutdown.Both);
-      client.Close();
+      _client.Shutdown(SocketShutdown.Both);
+      _client.Close();
     }
 
     private void ConnectCallback(IAsyncResult ar)
@@ -71,7 +71,11 @@ namespace Chakra
       try
       {
         // Retrieve the socket from the state object.  
-        Socket client = (Socket) ar.AsyncState;
+        Socket? client =  ar.AsyncState as Socket;
+        if (client == null)
+        {
+          throw new Exception("Invalid socket state at SocketClient.ConnectCallback()");
+        }
 
         // Complete the connection.  
         client.EndConnect(ar);
@@ -94,7 +98,7 @@ namespace Chakra
       {
         // Create the state object.  
         StateObject state = new StateObject();
-        state.workSocket = client;
+        state.WorkSocket = client;
 
         // Begin receiving the data from the remote device.  
         client.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
@@ -112,8 +116,13 @@ namespace Chakra
       {
         // Retrieve the state object and the client socket
         // from the asynchronous state object.  
-        StateObject state = (StateObject) ar.AsyncState;
-        Socket client = state.workSocket;
+        StateObject? state =  ar.AsyncState as StateObject;
+        if (state == null)
+        {
+          throw new Exception("Invalid socket state at SocketClient.ReceiveCallback()");
+        }
+
+        Socket client = state.WorkSocket;
 
         // Read data from the remote device.  
         int bytesRead = client.EndReceive(ar);

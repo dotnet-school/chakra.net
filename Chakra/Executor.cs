@@ -7,7 +7,7 @@ namespace Chakra
 {
     public class Executor
     {
-        private static VirtualStdOut _stdOut;
+        private static VirtualStdOut? _stdOut;
         
         private readonly SnippetProgramGenerator _generator;
         private readonly MetadataReference[] _assemblies;
