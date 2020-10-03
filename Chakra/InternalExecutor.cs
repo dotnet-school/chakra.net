@@ -18,6 +18,11 @@ namespace Chakra
       var compiler = new Compiler();
       var runner = new Runner();
       byte[] compiled = compiler.Compile(fileName, sourceCode);
+
+      if (compiled == null)
+      {
+        throw new DynamicCompilationException($"Please check the code syntax : {Environment.NewLine} {sourceCode}");
+      }
       runner.Execute(compiled, args, port);
 
       return server.GetMessage();
