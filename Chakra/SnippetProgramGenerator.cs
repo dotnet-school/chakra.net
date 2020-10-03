@@ -8,11 +8,7 @@ namespace Chakra
     public int SnippetLineStart { get; }
 
     private readonly static string SnippetProgramTemplate = @"
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
+//__IMPORTS__
 
 namespace Chakra
 {
@@ -35,11 +31,15 @@ namespace Chakra
               .Select((line, index) => new {line, index})
               .First(position => position.line.Contains("//__SNIPPET__")).index;
     }
-    public string CreateProgramForSnippet(string[] snippetLines)
+    public string CreateProgramForSnippet(string[] snippetLines, string[] imports)
     {
-      return SnippetProgramTemplate.Replace(
+      return SnippetProgramTemplate
+              .Replace(
               "//__SNIPPET__",
-              string.Join(Environment.NewLine, snippetLines));
+              string.Join(Environment.NewLine, snippetLines))
+              .Replace(
+              "//__IMPORTS__",
+              string.Join(Environment.NewLine, imports));
     }
   }
 }

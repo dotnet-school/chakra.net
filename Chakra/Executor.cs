@@ -1,28 +1,45 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using Microsoft.CodeAnalysis;
 
 namespace Chakra
 {
     public class Executor
     {
-        private SnippetProgramGenerator _generator;
         private static VirtualStdOut _stdOut;
+        
+        private readonly SnippetProgramGenerator _generator;
+        private readonly MetadataReference[] _assemblies;
 
         public Executor(SnippetProgramGenerator snippetProgramGenerator)
         {
             _generator = snippetProgramGenerator;
+            _assemblies = ExecutorOptions.GetDefaultAssemblies();
+        }
+
+        public Executor(SnippetProgramGenerator snippetProgramGenerator, MetadataReference[] assemblies)
+        {
+            _generator = snippetProgramGenerator;
+            _assemblies = assemblies;
         }
 
         public string ExecuteSnippet(string[] snippet)
         {
+            return ExecuteSnippet(snippet, ExecutorOptions.GetDefaultImports());
+        }
+
+        public string ExecuteSnippet(string[] snippet, string[] imports)
+        {
             try
             {
-                return InternalExecuter.CompileAndRun( _generator.CreateProgramForSnippet(snippet),
-                                Array.Empty<string>());
+                return InternalExecuter.CompileAndRun( 
+                                _generator.CreateProgramForSnippet(snippet, imports),
+                                Array.Empty<string>(),
+                                _assemblies);
             }
             catch (DynamicCompilationException e)
             {
-                throw new DynamicCompilationException(e, _generator.SnippetLineStart);
+                throw new DynamicCompilationException(e, _generator.SnippetLineStart + imports.Length -  1);
             }
             
         }
