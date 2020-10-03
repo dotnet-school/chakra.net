@@ -14,12 +14,12 @@ namespace Chakra
       Captured = new StringWriter();
     }
     
-    override public void Write(string output)
+    override public void Write(string? output)
     {
       Captured.Write(output);
     }
 
-    override public void WriteLine(string output)
+    override public void WriteLine(string? output)
     {
       Captured.WriteLine(output);
     }

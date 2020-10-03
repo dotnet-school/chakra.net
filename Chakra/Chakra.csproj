@@ -7,6 +7,7 @@
     <Authors>Nishant Singh</Authors>
     <Company>Chivoy</Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
