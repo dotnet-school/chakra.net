@@ -24,10 +24,8 @@ namespace Chakra.Test
                     Console.WriteLine($""i={i}"");
                 }
             ";
-                           
-            string result = _executor.ExecuteSnippet(BreakLines(snippet));
-            string expected = LinesOf("i=1", "i=2", "i=3");
-            Assert.Equal(expected, result);
+
+            ExpectOutput(snippet, "i=1", "i=2", "i=3");
         }
 
         [Fact]
@@ -43,9 +41,7 @@ namespace Chakra.Test
             Console.WriteLine(""after task"");
             ";
 
-            string expected = LinesOf("before task", "In the task", "after task");
-            string result = _executor.ExecuteSnippet(BreakLines(script));
-            Assert.Equal(expected, result );
+            ExpectOutput(script, "before task", "In the task", "after task");
         }
         
         [Fact]
@@ -70,21 +66,21 @@ namespace Chakra.Test
               Console.WriteLine(string.Join("", "", days.Keys));
               Console.WriteLine(string.Join("", "", days.Values));
             ";
-
-            string expected = LinesOf(
-            "item one, item two",
-            "mo, tu, we, th, fr, sa, su",
-            "Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday"
-            );
             
-            string result = _executor.ExecuteSnippet(BreakLines(script));
-            Assert.Equal(expected, result );
+            ExpectOutput(script,         
+                "item one, item two",
+                "mo, tu, we, th, fr, sa, su",
+                "Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday");
+        }
+
+        private void ExpectOutput(string snippet, params string[] expected)
+        {
+            Assert.Equal(LinesOf(expected), _executor.ExecuteSnippet(BreakLines(snippet)));
         }
 
     }
     
-    // TODO should support lists, enumerable, arrays and dictionary
-    // Should support exceptions
+    // TODO Should support exceptions
     // TODO should support tasks
     // TODO should support linq
     // TODO should support reading a file
