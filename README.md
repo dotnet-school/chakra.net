@@ -42,8 +42,6 @@ Compile and run .NET snippets dynamically
 
 - [ ] expectations and reporting
 
-- [ ] 
-
 - [ ] exceptions (caught and uncaught)
 
   

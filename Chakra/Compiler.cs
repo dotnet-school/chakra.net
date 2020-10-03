@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,11 +9,11 @@ namespace Chakra
 {
     internal class Compiler
     {
-        public byte[] Compile(string sourceCode)
+        public byte[] Compile(string sourceCode, MetadataReference[] assemblies)
         {
             using (var peStream = new MemoryStream())
             {
-                var result = GenerateCode(sourceCode).Emit(peStream);
+                var result = GenerateCode(sourceCode, assemblies).Emit(peStream);
 
                 if (!result.Success)
                 {
@@ -35,26 +34,12 @@ namespace Chakra
             }
         }
 
-        private static CSharpCompilation GenerateCode(string sourceCode)
+        private static CSharpCompilation GenerateCode(string sourceCode, MetadataReference[] references)
         {
             var codeString = SourceText.From(sourceCode);
             var options = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.CSharp8);
 
             var parsedSyntaxTree = SyntaxFactory.ParseSyntaxTree(codeString, options);
-
-            var references = new MetadataReference[]
-            {
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(Console).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(System.Linq.Enumerable).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(System.Text.RegularExpressions.Regex).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(System.Runtime.AssemblyTargetedPatchBandAttribute).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(Microsoft.CSharp.RuntimeBinder.CSharpArgumentInfo).Assembly.Location),
-                // To load current dll in the compilation context
-                MetadataReference.CreateFromFile(typeof(SocketClient).Assembly.Location),
-                // For socket connections
-                MetadataReference.CreateFromFile(typeof(System.Net.IPAddress).Assembly.Location),
-            };
 
             return CSharpCompilation.Create("Hello.dll",
                 new[] { parsedSyntaxTree }, 
