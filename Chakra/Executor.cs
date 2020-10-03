@@ -30,7 +30,7 @@ namespace Chakra
 
             if (_stdOut == null)
             {
-                throw new DynamicCodeException("Make sure to call CaptureConsole() in start of code");
+                throw new CodeTemplateException("Make sure to call CaptureConsole() in start of code");
             }
             Console.Out.Flush();
             string? consoleOutput = Regex.Replace(_stdOut.Captured.ToString() ?? string.Empty, "\n$", "");
