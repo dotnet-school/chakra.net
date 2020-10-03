@@ -34,7 +34,7 @@ namespace Chakra.Test
         public void ShouldRunAsyncScripts()
         {
             string script = @"
-                  Console.WriteLine(""before task"");
+            Console.WriteLine(""before task"");
             var task = Task.Run(() =>
             {
                 Console.WriteLine(""In the task"");
@@ -48,9 +48,43 @@ namespace Chakra.Test
             Assert.Equal(expected, result );
         }
         
+        [Fact]
+        public void ShouldSupportListsEnumerableArraysAndDictionary()
+        {
+            string script = @"
+              IEnumerable<string> list = new List<string>() {""item one"", ""item two""};
+              if (list.ToArray().Equals(Array.Empty<string>()))
+              {
+                throw new Exception(""This never happens"");
+              }
+              Console.WriteLine(string.Join("", "", list));
+              var days = new Dictionary<string, string> { 
+                      [""mo""] =  ""Monday"", 
+                      [""tu""] =  ""Tuesday"", 
+                      [""we""] =  ""Wednesday"", 
+                      [""th""] =  ""Thursday"", 
+                      [""fr""] =  ""Friday"", 
+                      [""sa""] =  ""Saturday"", 
+                      [""su""] =  ""Sunday""
+              };
+              Console.WriteLine(string.Join("", "", days.Keys));
+              Console.WriteLine(string.Join("", "", days.Values));
+            ";
+
+            string expected = LinesOf(
+            "item one, item two",
+            "mo, tu, we, th, fr, sa, su",
+            "Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday"
+            );
+            
+            string result = _executor.ExecuteSnippet(BreakLines(script));
+            Assert.Equal(expected, result );
+        }
+
     }
     
     // TODO should support lists, enumerable, arrays and dictionary
+    // Should support exceptions
     // TODO should support tasks
     // TODO should support linq
     // TODO should support reading a file
