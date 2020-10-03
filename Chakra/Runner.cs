@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace DynamicRun.Builder
+namespace Chakra
 {
   internal class Runner
   {

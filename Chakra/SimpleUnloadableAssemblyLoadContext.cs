@@ -1,7 +1,7 @@
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace DynamicRun.Builder
+namespace Chakra
 {
   internal class SimpleUnloadableAssemblyLoadContext : AssemblyLoadContext
   {

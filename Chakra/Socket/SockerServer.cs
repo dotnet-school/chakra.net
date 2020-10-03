@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace DynamicRun
+namespace Chakra
 {
   // State object for reading client data asynchronously  
   public class StateObject

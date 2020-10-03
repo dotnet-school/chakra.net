@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace DynamicRun
+namespace Chakra
 {
   public static class SocketConfig
   {

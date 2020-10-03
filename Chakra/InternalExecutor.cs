@@ -2,7 +2,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace DynamicRun.Builder
+namespace Chakra
 {
   public class InternalExecuter
   {
@@ -18,6 +18,11 @@ namespace DynamicRun.Builder
       var compiler = new Compiler();
       var runner = new Runner();
       byte[] compiled = compiler.Compile(fileName, sourceCode);
+
+      if (compiled == null)
+      {
+        throw new DynamicCompilationException($"Please check the code syntax : {Environment.NewLine} {sourceCode}");
+      }
       runner.Execute(compiled, args, port);
 
       return server.GetMessage();

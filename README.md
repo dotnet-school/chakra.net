@@ -1,51 +1,50 @@
+[![Build Status](https://dev.azure.com/dotnet-school/Chakra.NET/_apis/build/status/dotnet-school.chakra.net?branchName=release-0.2.0)](https://dev.azure.com/dotnet-school/Chakra.NET/_build/latest?definitionId=3&branchName=release-0.2.0)
+
 # Chakra.NET
 
-Experimental NuGet to compile and run .NET packages in browsers.
+Compile and run .NET snippets dynamically
 
 
 
-Creating a Nuget Package
+### Todo 
 
-- signup on nuget.org, create an API key
+- [ ] Use text writer to capture console
 
-- Create a new solution
+- [ ] async
 
-  ```bash
-  dotnet new sln -o Chakra.NET
-  cd Chakra.NET
-  dotnet new classlib -o Chakra
-  dotnet sln add ./Chakra/Chakra.csproj
-  dotnet new xunit -o Chakra.Test
+- [ ] lists, enumerable, arrays and dictionary
+
+- [ ] tasks
+
+- [ ] linq
+
+- [ ] reading a file
+
+- [ ] files, path
+
+- [ ] creating classes
+
+- [ ] regex
+
+- [ ] classes, getter, setter
+
+- [ ] namespace
+
+- [ ] xunit
+
+- [ ] moq
+
+- [ ] expectations and reporting
+
+- [ ] line numbers in errors
+
   
-  dotnet add Chakra.Test/Chakra.Test.csproj reference Chakra/Chakra.csproj
-  dotnet sln add ./Chakra.Test/Chakra.Test.csproj
-  
-  
-  ```
 
-- Add the package info to csproj file
 
-  ```xml
-    <PropertyGroup>
-      <TargetFramework>netcoreapp3.1</TargetFramework>
-      <PackageId>Chakra.NET</PackageId>
-      <Version>0.1.0</Version>
-      <Authors>Nishant Singh</Authors>
-      <Company>Chivoy</Company>
-      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    </PropertyGroup>
-  ```
 
-- Add any more configuration as required from https://docs.microsoft.com/en-us/dotnet/core/tools/csproj#nuget-metadata-properties
+### Releasing a version
 
-- Package the solution
+- Update the version in Chakra/Chakra.csproj
+- Create a release branch with name release-x.y.z
+- push the branch, nuget will be auto published unless tests/build are failling in the version
 
-  ```bash
-  dotnet pack -o ./dist
-  
-dotnet nuget push ./dist/Chakra.NET.0.1.0.nupkg --api-key oy2phiwctgsbq5bq67tqzbgf3pampz6elpks42xrf3b5fm --source https://api.nuget.org/v3/index.json
-  
-  
-  ```
-  
-  

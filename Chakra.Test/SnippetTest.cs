@@ -31,4 +31,19 @@ namespace Chakra.Test
             Assert.Equal(expected, result);
         }
     }
+    
+    // TODO should support async
+    // TODO should support lists, enumerable, arrays and dictionary
+    // TODO should support tasks
+    // TODO should support linq
+    // TODO should support reading a file
+    // Todo should support files, path
+    // Todo should support creating classes
+    // Todo should support regex
+    // Todo should support classes, getter, setter
+    // Todo should support namespace
+    // Todo should support xunit
+    // Todo should support moq
+    // Todo should support expectations and reporting
+    // Todo should report line numbers in errors
 }
