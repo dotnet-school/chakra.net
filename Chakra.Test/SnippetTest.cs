@@ -82,6 +82,14 @@ namespace Chakra.Test
             Assert.Throws<NullReferenceException>(() => _executor.ExecuteSnippet(BreakLines(snippet)));
         }
         
+        [Fact] 
+        public void ShouldSupportRegex()
+        {   string snippet = @"
+                Console.WriteLine(Regex.Replace(""my name"", ""n..e"", ""identity""));
+            ";
+            ExpectOutput(snippet, "my identity");
+        }
+        
         private void ExpectOutput(string snippet, params string[] expected)
         {
             Assert.Equal(LinesOf(expected), _executor.ExecuteSnippet(BreakLines(snippet)));
