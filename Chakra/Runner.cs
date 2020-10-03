@@ -35,9 +35,16 @@ namespace Chakra
 
         var entry = assembly.EntryPoint;
 
-        _ = entry != null && entry.GetParameters().Length > 0
-                ? entry.Invoke(null, new object[] {args})
-                : entry.Invoke(null, null);
+        try
+        {
+          _ = entry != null && entry.GetParameters().Length > 0
+                  ? entry.Invoke(null, new object[] {args})
+                  : entry.Invoke(null, null);
+        }
+        catch (System.Reflection.TargetInvocationException e)
+        {
+          throw e.GetBaseException();
+        }
 
         assemblyLoadContext.Unload();
 
