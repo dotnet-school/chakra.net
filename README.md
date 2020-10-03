@@ -8,23 +8,29 @@ Compile and run .NET snippets dynamically
 
 ### Todo 
 
-- [ ] Use text writer to capture console
+- [x] Use text writer to capture console
 
-- [ ] async
+- [x] async
 
-- [ ] lists, enumerable, arrays and dictionary
+- [x] lists, enumerable, arrays and dictionary
 
-- [ ] tasks
+- [x] tasks
 
-- [ ] linq
+- [x] linq
 
-- [ ] reading a file
+- [x] reading a file
 
-- [ ] files, path
+- [x] files, path
+
+- [x] regex
+
+- [x] ~~line numbers in runtime errors~~ (not feasible)
+
+- [x] compile errors and line numbers
+
+- [ ] extract assemblies to API
 
 - [ ] creating classes
-
-- [ ] regex
 
 - [ ] classes, getter, setter
 
@@ -36,7 +42,7 @@ Compile and run .NET snippets dynamically
 
 - [ ] expectations and reporting
 
-- [ ] line numbers in errors
+- [ ] 
 
 - [ ] exceptions (caught and uncaught)
 

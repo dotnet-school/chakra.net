@@ -15,13 +15,22 @@ namespace Chakra
 
         public string ExecuteSnippet(string[] snippet)
         {
-            return InternalExecuter.CompileAndRun("Snippet.cs", _generator.CreateProgramForSnippet(snippet), Array.Empty<string>());
+            try
+            {
+                return InternalExecuter.CompileAndRun( _generator.CreateProgramForSnippet(snippet),
+                                Array.Empty<string>());
+            }
+            catch (DynamicCompilationException e)
+            {
+                throw new DynamicCompilationException(e, _generator.SnippetLineStart);
+            }
+            
         }
 
         public static void CaptureConsole()
         {
             _stdOut = new VirtualStdOut();
-            System.Console.SetOut(_stdOut);
+            Console.SetOut(_stdOut);
         }
         
         public static void SendConsoleOutput(string [] args)

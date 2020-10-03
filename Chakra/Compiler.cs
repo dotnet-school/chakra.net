@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
@@ -9,7 +10,7 @@ namespace Chakra
 {
     internal class Compiler
     {
-        public byte[] Compile(string filepath, string sourceCode)
+        public byte[] Compile(string sourceCode)
         {
             using (var peStream = new MemoryStream())
             {
@@ -17,21 +18,17 @@ namespace Chakra
 
                 if (!result.Success)
                 {
-                    Console.WriteLine("Compilation done with error.");
-
+                    StringBuilder errorMessage = new StringBuilder();
                     var failures = result.Diagnostics.Where(diagnostic => diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error);
-
+                    int lineNumber = failures.FirstOrDefault().Location.GetLineSpan().Span.Start.Line;
                     foreach (var diagnostic in failures)
                     {
-                        Console.Error.WriteLine($"{filepath}:{diagnostic.Location.GetLineSpan().Span.Start.Line}");
-                        Console.Error.WriteLine("{0}: {1}", diagnostic.Id, diagnostic.GetMessage());
+                        errorMessage.Append($"Line:{diagnostic.Location.GetLineSpan().Span.Start.Line}-");
+                        errorMessage.Append($"{diagnostic.Id}, {diagnostic.GetMessage()}");
                     }
-
-                    return null;
+                    throw new DynamicCompilationException( errorMessage.ToString(), lineNumber);
                 }
-
-                Console.WriteLine("Compilation done without any error.");
-
+                
                 peStream.Seek(0, SeekOrigin.Begin);
 
                 return peStream.ToArray();

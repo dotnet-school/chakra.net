@@ -1,9 +1,12 @@
 using System;
+using System.Linq;
 
 namespace Chakra
 {
   public class SnippetProgramGenerator
   {
+    public int SnippetLineStart { get; }
+
     private readonly static string SnippetProgramTemplate = @"
 using System;
 using System.Collections.Generic;
@@ -25,6 +28,13 @@ namespace Chakra
 }
      ";
 
+    public SnippetProgramGenerator()
+    {
+      SnippetLineStart = SnippetProgramTemplate
+              .Split(Environment.NewLine)
+              .Select((line, index) => new {line, index})
+              .First(position => position.line.Contains("//__SNIPPET__")).index;
+    }
     public string CreateProgramForSnippet(string[] snippetLines)
     {
       return SnippetProgramTemplate.Replace(

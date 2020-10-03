@@ -7,8 +7,16 @@ namespace Chakra
 {
   public class DynamicCompilationException : Exception
   {
-    public DynamicCompilationException(string message) : base(message)
+    public int LineNumber { get; }
+
+    public DynamicCompilationException(string message, int lineNumber) : base(message)
     {
+      LineNumber = lineNumber;
+    }
+
+    public DynamicCompilationException(DynamicCompilationException e, int offsetLine) : base(e.Message)
+    {
+      LineNumber = e.LineNumber - offsetLine;
     }
   }
 }

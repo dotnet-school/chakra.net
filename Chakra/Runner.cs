@@ -21,7 +21,7 @@ namespace Chakra
         GC.WaitForPendingFinalizers();
       }
 
-      Console.WriteLine(assemblyLoadContextWeakRef.IsAlive ? "Unloading failed!" : "Unloading success!");
+      // Console.WriteLine(assemblyLoadContextWeakRef.IsAlive ? "Unloading failed!" : "Unloading success!");
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]

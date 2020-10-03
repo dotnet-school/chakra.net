@@ -6,23 +6,18 @@ namespace Chakra
 {
   public class InternalExecuter
   {
-    public static string CompileAndRun(string fileName, string sourceCode, string[] args)
+    public static string CompileAndRun(string sourceCode, string[] args)
     {
       IPAddress ipAddress = SocketConfig.GetServer();
       Random random = new Random();
       int port = random.Next(50000, 65000);
-      Console.WriteLine($"using port {port}");
 
       SocketServer server = Listen(ipAddress, port);
 
       var compiler = new Compiler();
       var runner = new Runner();
-      byte[] compiled = compiler.Compile(fileName, sourceCode);
-
-      if (compiled == null)
-      {
-        throw new DynamicCompilationException($"Please check the code syntax : {Environment.NewLine} {sourceCode}");
-      }
+      byte[] compiled = compiler.Compile(sourceCode);
+      
       runner.Execute(compiled, args, port);
 
       return server.GetMessage();

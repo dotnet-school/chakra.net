@@ -90,6 +90,25 @@ namespace Chakra.Test
             ExpectOutput(snippet, "my identity");
         }
         
+                
+        [Fact] 
+        public void ShouldReportCompileErrorsWithLine()
+        {  
+            string snippet = @"
+            for (var i = 0; i < 3; i++)
+              {
+                Console.WriteLine(i);
+              }
+
+              int a = undefined;";
+            string expectedMessage = "Line:20-CS0103, The name 'undefined' does not exist in the current context";
+            int expectedLine = 6; 
+            DynamicCompilationException exception = Assert.Throws<DynamicCompilationException>(
+                            () => _executor.ExecuteSnippet(BreakLines(snippet)));
+            Assert.Equal(expectedMessage, exception.Message);
+            Assert.Equal(6, exception.LineNumber);
+        }
+
         private void ExpectOutput(string snippet, params string[] expected)
         {
             Assert.Equal(LinesOf(expected), _executor.ExecuteSnippet(BreakLines(snippet)));
