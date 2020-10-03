@@ -72,17 +72,24 @@ namespace Chakra.Test
                 "mo, tu, we, th, fr, sa, su",
                 "Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday");
         }
-
+        
+        [Fact] 
+        public void ShouldThrowActualExceptionFromDynamicCode()
+        {   string snippet = @"
+                string s = null;
+                Console.WriteLine(s.Length);
+            ";
+            Assert.Throws<NullReferenceException>(() => _executor.ExecuteSnippet(BreakLines(snippet)));
+        }
+        
         private void ExpectOutput(string snippet, params string[] expected)
         {
             Assert.Equal(LinesOf(expected), _executor.ExecuteSnippet(BreakLines(snippet)));
         }
-
     }
-    
+    // Todo should report line numbers in errors
+    // TODO should throw compile error
     // TODO Should support exceptions
-    // TODO should support tasks
-    // TODO should support linq
     // TODO should support reading a file
     // Todo should support files, path
     // Todo should support creating classes
@@ -92,5 +99,4 @@ namespace Chakra.Test
     // Todo should support xunit
     // Todo should support moq
     // Todo should support expectations and reporting
-    // Todo should report line numbers in errors
 }

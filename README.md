@@ -38,6 +38,8 @@ Compile and run .NET snippets dynamically
 
 - [ ] line numbers in errors
 
+- [ ] exceptions (caught and uncaught)
+
   
 
 
