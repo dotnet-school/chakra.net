@@ -1,6 +1,7 @@
 using System;
 using Xunit;
 
+using static Chakra.Test.TestHelper;
 namespace Chakra.Test
 {
     public class ExecutorTest
@@ -18,21 +19,37 @@ namespace Chakra.Test
         [Fact]
         public void ShouldExecuteASnippet()
         {
-            string[] snippet =
-            {
-                            "for (int i = 1; i <= 3; i++)", 
-                            "{", 
-                            "Console.WriteLine($\"i={i}\");", 
-                            "}"
-            }; 
+            string snippet = @"
+                for (int i = 1; i <= 3; i++){
+                    Console.WriteLine($""i={i}"");
+                }
+            ";
                            
-            string result = _executor.ExecuteSnippet(snippet);
-            string expected = string.Join(Environment.NewLine, new[]{"i=1", "i=2", "i=3"});
+            string result = _executor.ExecuteSnippet(BreakLines(snippet));
+            string expected = LinesOf("i=1", "i=2", "i=3");
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void ShouldRunAsyncScripts()
+        {
+            string script = @"
+                  Console.WriteLine(""before task"");
+            var task = Task.Run(() =>
+            {
+                Console.WriteLine(""In the task"");
+            });
+            await task;
+            Console.WriteLine(""after task"");
+            ";
+
+            string expected = LinesOf("before task", "In the task", "after task");
+            string result = _executor.ExecuteSnippet(BreakLines(script));
+            Assert.Equal(expected, result );
+        }
+        
     }
     
-    // TODO should support async
     // TODO should support lists, enumerable, arrays and dictionary
     // TODO should support tasks
     // TODO should support linq
