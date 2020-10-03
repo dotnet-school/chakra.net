@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 
@@ -20,7 +21,7 @@ namespace Chakra
         public Executor(SnippetProgramGenerator snippetProgramGenerator, MetadataReference[] assemblies)
         {
             _generator = snippetProgramGenerator;
-            _assemblies = assemblies;
+            _assemblies = ExecutorOptions.GetDefaultAssemblies().Union(assemblies).ToArray();
         }
 
         public string ExecuteSnippet(string[] snippet)
@@ -33,7 +34,7 @@ namespace Chakra
             try
             {
                 return InternalExecuter.CompileAndRun( 
-                                _generator.CreateProgramForSnippet(snippet, imports),
+                                _generator.CreateProgramForSnippet(snippet, ExecutorOptions.GetDefaultImports().Union(imports).ToArray()),
                                 Array.Empty<string>(),
                                 _assemblies);
             }

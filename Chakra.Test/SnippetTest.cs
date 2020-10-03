@@ -106,7 +106,7 @@ namespace Chakra.Test
             DynamicCompilationException exception = Assert.Throws<DynamicCompilationException>(
                             () => _executor.ExecuteSnippet(BreakLines(snippet)));
             Assert.Equal(expectedMessage, exception.Message);
-            Assert.Equal(6, exception.LineNumber);
+            Assert.Equal(expectedLine, exception.LineNumber);
         }
 
         private void ExpectOutput(string snippet, params string[] expected)
