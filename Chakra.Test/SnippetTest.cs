@@ -101,7 +101,7 @@ namespace Chakra.Test
 
               int a = undefined;";
             string expectedMessage = "CS0103: The name 'undefined' does not exist in the current context";
-            int expectedLine = 5; 
+            int expectedLine = 7; 
             DynamicCompilationException exception = Assert.Throws<DynamicCompilationException>(
                             () => Executor.ExecuteSnippet(BreakLines(snippet)));
             Assert.Equal(expectedMessage, exception.Message);

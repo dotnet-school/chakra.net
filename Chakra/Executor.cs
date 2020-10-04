@@ -49,7 +49,7 @@ namespace Chakra
                 }
                 catch (DynamicCompilationException e)
                 {
-                    throw new DynamicCompilationException(e, Generator.SnippetLineStart + imports.Length);
+                    throw new DynamicCompilationException(e, Generator.SnippetLineStart + imports.Length - 2);
                 }
             }
         }

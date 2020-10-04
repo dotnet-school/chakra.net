@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <PackageId>Chakra.NET</PackageId>
-    <Version>0.3.1</Version>
+    <Version>0.3.2</Version>
     <Authors>Nishant Singh</Authors>
     <Company>Chivoy</Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
