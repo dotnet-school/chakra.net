@@ -16,7 +16,7 @@ namespace Chakra
               MetadataReference.CreateFromFile(typeof(System.Runtime.AssemblyTargetedPatchBandAttribute).Assembly.Location),
               MetadataReference.CreateFromFile(typeof(Microsoft.CSharp.RuntimeBinder.CSharpArgumentInfo).Assembly.Location),
               // To load current dll in the compilation context
-              MetadataReference.CreateFromFile(typeof(SocketClient).Assembly.Location),
+              MetadataReference.CreateFromFile(typeof(Executor).Assembly.Location),
               // For socket connections
               MetadataReference.CreateFromFile(typeof(System.Net.IPAddress).Assembly.Location),
       };

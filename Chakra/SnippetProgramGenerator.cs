@@ -16,9 +16,7 @@ namespace Chakra
   {
     public static async Task Main(string[] args)
     {
-      Executor.CaptureConsole();
       //__SNIPPET__
-      Executor.SendConsoleOutput(args);
     }
   }
 }

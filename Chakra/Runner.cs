@@ -8,12 +8,10 @@ namespace Chakra
 {
   internal class Runner
   {
-    public void Execute(byte[] compiledAssembly, string[] args, int callbackPort)
+    public void Execute(byte[] compiledAssembly, string[] args)
     {
-      List<string> argsWitPort = args.ToList();
-      argsWitPort.Insert(0, $"{callbackPort}");
 
-      var assemblyLoadContextWeakRef = LoadAndExecute(compiledAssembly, argsWitPort.ToArray());
+      var assemblyLoadContextWeakRef = LoadAndExecute(compiledAssembly, args);
 
       for (var i = 0; i < 8 && assemblyLoadContextWeakRef.IsAlive; i++)
       {

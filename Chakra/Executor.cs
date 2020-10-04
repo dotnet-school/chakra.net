@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
@@ -7,10 +8,12 @@ namespace Chakra
 {
     public class Executor
     {
-        private static VirtualStdOut? _stdOut;
+        private VirtualStdOut? _stdOut;
+        private  TextWriter _defaultStdOut;
         
         private readonly SnippetProgramGenerator _generator;
         private readonly MetadataReference[] _assemblies;
+        private readonly Object _monitor = new Object();
 
         public Executor(SnippetProgramGenerator snippetProgramGenerator)
         {
@@ -31,37 +34,45 @@ namespace Chakra
 
         public string ExecuteSnippet(string[] snippet, string[] imports)
         {
-            try
+            lock (_monitor)
             {
-                return InternalExecuter.CompileAndRun( 
-                                _generator.CreateProgramForSnippet(snippet, ExecutorOptions.GetDefaultImports().Union(imports).ToArray()),
-                                Array.Empty<string>(),
-                                _assemblies);
+                try
+                {
+                    CaptureConsole();
+                    var sourceCode = _generator
+                                    .CreateProgramForSnippet(snippet, 
+                                        ExecutorOptions.GetDefaultImports().Union(imports).ToArray());
+                    var compiler = new Compiler();
+                    var runner = new Runner();
+                    byte[] compiled = compiler.Compile(sourceCode, _assemblies);
+      
+                    runner.Execute(compiled, Array.Empty<string>());
+                    return GetConsoleOutput();
+                }
+                catch (DynamicCompilationException e)
+                {
+                    throw new DynamicCompilationException(e, _generator.SnippetLineStart + imports.Length - 1);
+                }
             }
-            catch (DynamicCompilationException e)
-            {
-                throw new DynamicCompilationException(e, _generator.SnippetLineStart + imports.Length -  1);
-            }
-            
         }
 
-        public static void CaptureConsole()
+        public void CaptureConsole()
         {
+            _defaultStdOut = Console.Out;
             _stdOut = new VirtualStdOut();
             Console.SetOut(_stdOut);
         }
         
-        public static void SendConsoleOutput(string [] args)
+        public string GetConsoleOutput()
         {
-            int callbackPort = int.Parse(args[0]);
-
             if (_stdOut == null)
             {
                 throw new CodeTemplateException("Make sure to call CaptureConsole() in start of code");
             }
             Console.Out.Flush();
             string? consoleOutput = Regex.Replace(_stdOut.Captured.ToString() ?? string.Empty, "\n$", "");
-            Messaging.SendMessage(consoleOutput, callbackPort);
+            Console.SetOut(_defaultStdOut);
+            return consoleOutput;
         }
     }
 }
