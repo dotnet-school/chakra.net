@@ -6,40 +6,38 @@ using Microsoft.CodeAnalysis;
 
 namespace Chakra
 {
-    public class Executor
+    public static class Executor
     {
-        private VirtualStdOut? _stdOut;
-        private  TextWriter _defaultStdOut;
+        private  static VirtualStdOut? _stdOut;
+        private  static TextWriter? _defaultStdOut;
         
-        private readonly SnippetProgramGenerator _generator;
-        private readonly MetadataReference[] _assemblies;
-        private readonly Object _monitor = new Object();
-
-        public Executor(SnippetProgramGenerator snippetProgramGenerator)
+        private static readonly SnippetProgramGenerator Generator = new SnippetProgramGenerator();
+        private static  MetadataReference[] _assemblies = ExecutorOptions.GetDefaultAssemblies();
+        private static readonly Object Monitor = new Object();
+        
+        
+        public static void AddAssemblies(MetadataReference[] assemblies)
         {
-            _generator = snippetProgramGenerator;
-            _assemblies = ExecutorOptions.GetDefaultAssemblies();
-        }
-
-        public Executor(SnippetProgramGenerator snippetProgramGenerator, MetadataReference[] assemblies)
-        {
-            _generator = snippetProgramGenerator;
             _assemblies = ExecutorOptions.GetDefaultAssemblies().Union(assemblies).ToArray();
         }
 
-        public string ExecuteSnippet(string[] snippet)
+        public static void ResetAssemblies()
+        {
+            _assemblies = ExecutorOptions.GetDefaultAssemblies();
+        }
+        public static string ExecuteSnippet(string[] snippet)
         {
             return ExecuteSnippet(snippet, ExecutorOptions.GetDefaultImports());
         }
 
-        public string ExecuteSnippet(string[] snippet, string[] imports)
+        public static string ExecuteSnippet(string[] snippet, string[] imports)
         {
-            lock (_monitor)
+            lock (Monitor)
             {
                 try
                 {
                     CaptureConsole();
-                    var sourceCode = _generator
+                    var sourceCode = Generator
                                     .CreateProgramForSnippet(snippet, 
                                         ExecutorOptions.GetDefaultImports().Union(imports).ToArray());
                     var compiler = new Compiler();
@@ -51,19 +49,19 @@ namespace Chakra
                 }
                 catch (DynamicCompilationException e)
                 {
-                    throw new DynamicCompilationException(e, _generator.SnippetLineStart + imports.Length - 1);
+                    throw new DynamicCompilationException(e, Generator.SnippetLineStart + imports.Length - 1);
                 }
             }
         }
 
-        public void CaptureConsole()
+        public static void CaptureConsole()
         {
             _defaultStdOut = Console.Out;
             _stdOut = new VirtualStdOut();
             Console.SetOut(_stdOut);
         }
         
-        public string GetConsoleOutput()
+        public static string GetConsoleOutput()
         {
             if (_stdOut == null)
             {
