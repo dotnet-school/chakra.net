@@ -6,12 +6,11 @@ namespace Chakra.Test
 {
     public class ExecutorTest
     {
-        private Executor _executor = new Executor(new SnippetProgramGenerator());
         [Fact]
         public void ShouldPrintConsole()
         {
             string[] snippet =  {"Console.WriteLine(\"Hello World !\");"};
-            string result = _executor.ExecuteSnippet(snippet);
+            string result = Executor.ExecuteSnippet(snippet);
             string expected = "Hello World !";
             Assert.Equal(expected, result);
         }
@@ -79,7 +78,7 @@ namespace Chakra.Test
                 string s = null;
                 Console.WriteLine(s.Length);
             ";
-            Assert.Throws<NullReferenceException>(() => _executor.ExecuteSnippet(BreakLines(snippet)));
+            Assert.Throws<NullReferenceException>(() => Executor.ExecuteSnippet(BreakLines(snippet)));
         }
         
         [Fact] 
@@ -101,17 +100,17 @@ namespace Chakra.Test
               }
 
               int a = undefined;";
-            string expectedMessage = "Line:20-CS0103, The name 'undefined' does not exist in the current context";
+            string expectedMessage = "Line:19-CS0103, The name 'undefined' does not exist in the current context";
             int expectedLine = 6; 
             DynamicCompilationException exception = Assert.Throws<DynamicCompilationException>(
-                            () => _executor.ExecuteSnippet(BreakLines(snippet)));
+                            () => Executor.ExecuteSnippet(BreakLines(snippet)));
             Assert.Equal(expectedMessage, exception.Message);
             Assert.Equal(expectedLine, exception.LineNumber);
         }
 
         private void ExpectOutput(string snippet, params string[] expected)
         {
-            Assert.Equal(LinesOf(expected), _executor.ExecuteSnippet(BreakLines(snippet)));
+            Assert.Equal(LinesOf(expected), Executor.ExecuteSnippet(BreakLines(snippet)));
         }
     }
     // Todo should report line numbers in errors
