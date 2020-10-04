@@ -22,8 +22,7 @@ namespace Chakra
                     int lineNumber = failures.FirstOrDefault().Location.GetLineSpan().Span.Start.Line;
                     foreach (var diagnostic in failures)
                     {
-                        errorMessage.Append($"Line:{diagnostic.Location.GetLineSpan().Span.Start.Line}-");
-                        errorMessage.Append($"{diagnostic.Id}, {diagnostic.GetMessage()}");
+                        errorMessage.Append($"{diagnostic.Id}: {diagnostic.GetMessage()}");
                     }
                     throw new DynamicCompilationException( errorMessage.ToString(), lineNumber);
                 }
