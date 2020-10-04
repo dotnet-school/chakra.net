@@ -7,22 +7,22 @@ namespace Chakra.Test
     public class AssemblyTest
     {
 
-        [Fact]
-        public void ShouldGiveCompileErrorIfAssemblyMissing()
-        {
-            var customImports = new[] {"using System.ComponentModel;"};
-
-            string snippet = @"
-                EventDescriptor a = null;
-                Console.WriteLine(""not error"");
-            ";
-
-            Assert.Throws<DynamicCompilationException>(() => 
-                            Executor.ExecuteSnippet(BreakLines(snippet), customImports
-            ));
-            Executor.ResetAssemblies();
-        }
-        
+        // [Fact]
+        // public void ShouldGiveCompileErrorIfAssemblyMissing()
+        // {
+        //     var customImports = new[] {"using System.ComponentModel;"};
+        //
+        //     string snippet = @"
+        //         EventDescriptor a = null;
+        //         Console.WriteLine(""not error"");
+        //     ";
+        //
+        //     Assert.Throws<DynamicCompilationException>(() => 
+        //                     Executor.ExecuteSnippet(BreakLines(snippet), customImports
+        //     ));
+        //     Executor.ResetAssemblies();
+        // }
+        //
         [Fact]
         public void ShouldAllowAddingCustomAssemblyAndImports()
         {
