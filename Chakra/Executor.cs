@@ -30,7 +30,7 @@ namespace Chakra
             return ExecuteSnippet(snippet, ExecutorOptions.GetDefaultImports());
         }
 
-        private static string Execute(string sourceCode)
+        public static string Execute(string sourceCode)
         {
             lock (Monitor)
             {
