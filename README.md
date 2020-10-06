@@ -1,5 +1,7 @@
 [![Build Status](https://dev.azure.com/dotnet-school/Chakra.NET/_apis/build/status/dotnet-school.chakra.net?branchName=release-0.2.0)](https://dev.azure.com/dotnet-school/Chakra.NET/_build/latest?definitionId=3&branchName=release-0.2.0)
 
+[![NuGet Badge](https://buildstats.info/nuget/Chakra.NET)](https://www.nuget.org/packages/Chakra.NET/)
+
 # Chakra.NET
 
 Compile and run .NET snippets dynamically
