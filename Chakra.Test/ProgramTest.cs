@@ -1,3 +1,4 @@
+using System;
 using Xunit;
 
 using static Chakra.Test.TestHelper;
@@ -52,6 +53,30 @@ namespace Chakra.Test
 
             Assert.Equal(expectedMessage, exception.Message);
             Assert.Equal(expectedLine, exception.LineNumber);
+        }
+        
+        [Fact]
+        public void ShouldThrowActualExceptionFromPrograms()
+        {
+            string snippet =  @"
+            using System;
+            namespace Client
+            {
+                class Program
+                {
+                    static void Main(string[] args)
+                    {
+                        string s = null;
+                        Console.WriteLine(s.Length);
+                    }
+                }
+            }";
+
+            string expectedMessage = "Object reference not set to an instance of an object.";
+            var exception =  Assert.Throws<NullReferenceException>(
+                            () => Executor.Execute(snippet));
+
+            Assert.Equal(expectedMessage, exception.Message);
         }
         
         private void ExpectOutput(string snippet, params string[] expected)

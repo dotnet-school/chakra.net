@@ -37,7 +37,7 @@ namespace Chakra
                 try
                 {
                     CaptureConsole();
-                    
+
                     var compiler = new Compiler();
                     var runner = new Runner();
                     byte[] compiled = compiler.Compile(sourceCode, _assemblies);
@@ -47,6 +47,10 @@ namespace Chakra
                 catch (Xunit.Sdk.AssertActualExpectedException e)
                 {
                     throw new ExpectationException(e.Expected, e.Actual);
+                }
+                finally
+                {
+                    ResetConsole();
                 }
             }
  
@@ -79,8 +83,12 @@ namespace Chakra
             }
             Console.Out.Flush();
             string? consoleOutput = Regex.Replace(_stdOut.Captured.ToString() ?? string.Empty, "\n$", "");
-            Console.SetOut(_defaultStdOut);
             return consoleOutput;
+        }
+
+        private static void ResetConsole()
+        {
+            Console.SetOut(_defaultStdOut);
         }
     }
 }
