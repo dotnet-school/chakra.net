@@ -14,10 +14,5 @@ namespace Chakra.Client
 
             Console.WriteLine(result);
         }
-
-        // private static string Run()
-        // {
-        //     BreakLines(snippet)
-        // }
     }
 }
