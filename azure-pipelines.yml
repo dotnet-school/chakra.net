@@ -25,10 +25,12 @@ steps:
     command: 'build'
     arguments: '--configuration $(buildConfiguration)'
     projects: 'Chakra/Chakra.csproj'
+
 - task: DotNetCoreCLI@2
   displayName: "dotnet test"
   inputs:
-    command: 'test'
+    command: 'test '
+    arguments: 'Chakra.Test'
 
 - bash: dotnet pack -o $(Build.ArtifactStagingDirectory)/dist
   displayName: dotnet pack
