@@ -9,38 +9,21 @@ https://github.com/laurentkempe/DynamicRun/blob/master/DynamicRun/Program.cs
 ### Todo 
 
 - [x] Use text writer to capture console
-
 - [x] async
-
 - [x] lists, enumerable, arrays and dictionary
-
 - [x] tasks
-
 - [x] linq
-
 - [x] reading a file
-
 - [x] files, path
-
 - [x] regex
-
 - [x] ~~line numbers in runtime errors~~ (not feasible)
-
 - [x] compile errors and line numbers
-
-- [ ] dynamically add API
-
-- [ ] assemblies as string param
-
-- [ ] extract assemblies to API
-
+- [x] xunit
 - [ ] creating classes
-
 - [ ] classes, getter, setter
-
 - [ ] namespace
-
-- [ ] xunit
+- [ ] assemblies as string param
+- [ ] extract assemblies to API
 
 - [ ] moq
 
