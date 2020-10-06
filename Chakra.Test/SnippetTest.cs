@@ -107,12 +107,29 @@ namespace Chakra.Test
             Assert.Equal(expectedMessage, exception.Message);
             Assert.Equal(expectedLine, exception.LineNumber);
         }
+        
+        [Fact] 
+        public void ShouldSupportAssertions()
+        {  
+            string snippet = @"
+            int value = 34;
+            Assert.Equal(""expected value"" , ""actual value"");";
 
+            string expectedMessage = "Assert.Equal() Failure\nExpected: 3\nActual·";
+            int expectedLine = 2;
+            var exception = Assert.Throws<ExpectationException>(
+                            () => Executor.ExecuteSnippet(BreakLines(snippet)));
+
+            Assert.Equal("actual value", exception.Actual);
+            Assert.Equal("expected value", exception.Expected);
+        }
+        
         private void ExpectOutput(string snippet, params string[] expected)
         {
             Assert.Equal(LinesOf(expected), Executor.ExecuteSnippet(BreakLines(snippet)));
         }
     }
+    
     // Todo should report line numbers in errors
     // TODO should throw compile error
     // TODO Should support exceptions

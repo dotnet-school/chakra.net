@@ -1,5 +1,7 @@
 using System;
+using System.Diagnostics;
 using Microsoft.CodeAnalysis;
+using Xunit;
 
 namespace Chakra
 {
@@ -19,6 +21,7 @@ namespace Chakra
               MetadataReference.CreateFromFile(typeof(Executor).Assembly.Location),
               // For socket connections
               MetadataReference.CreateFromFile(typeof(System.Net.IPAddress).Assembly.Location),
+              MetadataReference.CreateFromFile(typeof(Assert).Assembly.Location),
       };
       return references;
     }
@@ -32,6 +35,7 @@ namespace Chakra
               "using System.Linq;",
               "using System.Threading.Tasks;",
               "using System.Text.RegularExpressions;",
+              "using Xunit;",
       };
     }
   }

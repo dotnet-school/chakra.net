@@ -38,18 +38,22 @@ namespace Chakra
                 {
                     CaptureConsole();
                     var sourceCode = Generator
-                                    .CreateProgramForSnippet(snippet, 
-                                        ExecutorOptions.GetDefaultImports().Union(imports).ToArray());
+                                    .CreateProgramForSnippet(snippet,
+                                                    ExecutorOptions.GetDefaultImports().Union(imports).ToArray());
                     var compiler = new Compiler();
                     var runner = new Runner();
                     byte[] compiled = compiler.Compile(sourceCode, _assemblies);
-      
+
                     runner.Execute(compiled, Array.Empty<string>());
                     return GetConsoleOutput();
                 }
                 catch (DynamicCompilationException e)
                 {
                     throw new DynamicCompilationException(e, Generator.SnippetLineStart + imports.Length - 2);
+                }
+                catch (Xunit.Sdk.AssertActualExpectedException e)
+                {
+                    throw new ExpectationException(e.Expected, e.Actual);
                 }
             }
         }

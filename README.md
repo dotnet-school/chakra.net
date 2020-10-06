@@ -4,7 +4,7 @@
 
 Compile and run .NET snippets dynamically
 
-
+https://github.com/laurentkempe/DynamicRun/blob/master/DynamicRun/Program.cs
 
 ### Todo 
 
@@ -27,6 +27,10 @@ Compile and run .NET snippets dynamically
 - [x] ~~line numbers in runtime errors~~ (not feasible)
 
 - [x] compile errors and line numbers
+
+- [ ] dynamically add API
+
+- [ ] assemblies as string param
 
 - [ ] extract assemblies to API
 
