@@ -11,31 +11,73 @@ https://github.com/laurentkempe/DynamicRun/blob/master/DynamicRun/Program.cs
 ### Todo 
 
 - [x] Use text writer to capture console
+
 - [x] async
+
 - [x] lists, enumerable, arrays and dictionary
+
 - [x] tasks
+
 - [x] linq
+
 - [x] reading a file
+
 - [x] files, path
+
 - [x] regex
+
 - [x] ~~line numbers in runtime errors~~ (not feasible)
+
 - [x] compile errors and line numbers
+
 - [x] xunit
+
+- [ ] expectations and reporting
+
+  - [ ] testcases by attributes
+  - [ ] 
+
 - [ ] creating classes
+
 - [ ] classes, getter, setter
+
 - [ ] namespace
+
 - [ ] assemblies as string param
+
 - [ ] extract assemblies to API
 
 - [ ] moq
-
-- [ ] expectations and reporting
 
 - [ ] exceptions (caught and uncaught)
 
   
 
 
+
+### Console output of a snippet
+
+
+
+### Console output of a program
+
+
+
+### Apply assertions on a snippet
+
+- Assertions available
+
+  - [ ] `_ShouldDefineVariable(string name, string type, string failId, string failMessage)`
+  - [ ] `_ShouldHaveValue(string name, string failId, string failMessage)`
+  - [ ] `xunit.Assert.*`
+
+  ```
+  // Assert
+  ```
+
+  
+
+### 
 
 ### Releasing a version
 
