@@ -12,6 +12,7 @@ namespace Chakra
         private  static TextWriter? _defaultStdOut;
         
         private static readonly SnippetProgramGenerator Generator = new SnippetProgramGenerator();
+        private static readonly ClassProgramGenerator ClassGenerator = new ClassProgramGenerator();
         private static  MetadataReference[] _assemblies = ExecutorOptions.GetDefaultAssemblies();
         private static readonly Object Monitor = new Object();
         
@@ -67,6 +68,19 @@ namespace Chakra
                 throw new DynamicCompilationException(e, Generator.SnippetLineStart + imports.Length - 2); 
             }
         }
+        
+        public static string ExecuteClass(string[] snippet, string[] validations)
+        {
+            string sourceCode = ClassGenerator
+                            .CreateProgramForSnippet(snippet, validations, ExecutorOptions.GetDefaultImports());
+            try
+            { 
+                return Execute(sourceCode);
+            } catch (DynamicCompilationException e) { 
+                throw new DynamicCompilationException(e, ClassGenerator.SnippetLineStart); 
+            }
+        }
+
 
         public static void CaptureConsole()
         {

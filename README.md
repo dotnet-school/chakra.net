@@ -11,20 +11,42 @@ https://github.com/laurentkempe/DynamicRun/blob/master/DynamicRun/Program.cs
 ### Todo 
 
 - [x] Use text writer to capture console
+
 - [x] async
+
 - [x] lists, enumerable, arrays and dictionary
+
 - [x] tasks
+
 - [x] linq
+
 - [x] reading a file
+
 - [x] files, path
+
 - [x] regex
+
 - [x] ~~line numbers in runtime errors~~ (not feasible)
+
 - [x] compile errors and line numbers
+
 - [x] xunit
+
 - [ ] creating classes
+
 - [ ] classes, getter, setter
+
+- [ ] assertions for
+
+  - [ ] get only fields
+  - [ ] set only fields
+  - [ ] get and set fields
+  - [ ] 
+
 - [ ] namespace
+
 - [ ] assemblies as string param
+
 - [ ] extract assemblies to API
 
 - [ ] moq
@@ -47,14 +69,40 @@ https://github.com/laurentkempe/DynamicRun/blob/master/DynamicRun/Program.cs
 
 - should be appended to a snippet in client code
 
-### Apply assertions on a snippet
-
 - Assertions available
 
   - [ ] ~~`_ShouldWriteToConsole(string[] expected, string testName)` : ignores order of output~~ : should be implemented on client side with return value of a snippet
   - [ ] `_ShouldDefineVariable(string name, string type, string testName)`
   - [ ] `_ShouldHaveValue(string variableName, string expectedValue, string testName)`
 - [ ] `xunit.Assert.*`
+  
+
+
+
+### Apply assertions on a class
+
+- Assertions
+
+  ```c#
+  _ShouldDefineClass(string className, string testName);
+  _ShouldExtendClass(string className, System.Type superclass string testName);
+  
+    
+  ```
+
+- class definitions should not have `using` statements
+
+- Demo
+
+  ```c#
+  string[] classSnippet = //..
+  
+  string [] testCases = //..
+    
+  Executor.ExecuteClass(classSnippet, testCases);
+  
+  ```
+
   
 
 ### Releasing a version
