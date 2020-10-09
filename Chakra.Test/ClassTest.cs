@@ -61,7 +61,5 @@ namespace Chakra.Test
       Assert.Equal(expectedLine, exception.LineNumber);
     }
     
-    // TODO: Should handle error in validation snippet
-
   }
 }

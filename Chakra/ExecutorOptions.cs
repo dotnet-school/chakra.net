@@ -36,6 +36,7 @@ namespace Chakra
               "using System.Threading.Tasks;",
               "using System.Text.RegularExpressions;",
               "using Xunit;",
+              "using static Chakra.Assertions.ShouldExtendClass;",
       };
     }
   }

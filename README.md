@@ -32,9 +32,9 @@ https://github.com/laurentkempe/DynamicRun/blob/master/DynamicRun/Program.cs
 
 - [x] xunit
 
-- [ ] creating classes
+- [x] creating classes
 
-- [ ] classes, getter, setter
+- [x] classes, getter, setter
 
 - [ ] assertions for
 
