@@ -35,7 +35,27 @@ https://github.com/laurentkempe/DynamicRun/blob/master/DynamicRun/Program.cs
 
   
 
+### Console output of a snippet
 
+
+
+### Console output of a program
+
+
+
+### Apply assertions on a snippet
+
+- should be appended to a snippet in client code
+
+### Apply assertions on a snippet
+
+- Assertions available
+
+  - [ ] ~~`_ShouldWriteToConsole(string[] expected, string testName)` : ignores order of output~~ : should be implemented on client side with return value of a snippet
+  - [ ] `_ShouldDefineVariable(string name, string type, string testName)`
+  - [ ] `_ShouldHaveValue(string variableName, string expectedValue, string testName)`
+- [ ] `xunit.Assert.*`
+  
 
 ### Releasing a version
 
