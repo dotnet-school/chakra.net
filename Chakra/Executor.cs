@@ -71,13 +71,14 @@ namespace Chakra
         
         public static string ExecuteClass(string[] snippet, string[] validations)
         {
+            string[] defaultImports = ExecutorOptions.GetDefaultImports();
             string sourceCode = ClassGenerator
-                            .CreateProgramForSnippet(snippet, validations, ExecutorOptions.GetDefaultImports());
+                            .CreateProgramForSnippet(snippet, validations, defaultImports);
             try
             { 
                 return Execute(sourceCode);
             } catch (DynamicCompilationException e) { 
-                throw new DynamicCompilationException(e, ClassGenerator.SnippetLineStart); 
+                throw new DynamicCompilationException(e, ClassGenerator.SnippetLineStart + defaultImports.Length - 2); 
             }
         }
 
